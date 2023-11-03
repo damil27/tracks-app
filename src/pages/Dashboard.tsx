@@ -6,7 +6,7 @@ import { TaskArea } from "../components/taskArea/TaskArea";
 export const Dashboard: FC = (): ReactElement => {
   return (
     <div>
-      <Grid container minHeight="100vh" spacing={2} p={0}>
+      <Grid container  spacing={2} p={0}>
         <TaskArea />
         <Sidebar />
       </Grid>

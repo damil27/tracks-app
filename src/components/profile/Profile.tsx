@@ -31,7 +31,7 @@ export const Profile: FC<Iprofile> = ({ name = "User" }): ReactElement => {
         {" "}
         Welcome, {name}
       </Typography>
-      <Typography variant="body1" color="text.primary">
+      <Typography variant="body1" color="text.primary"  sx={{display: {xs: "none", md:'block'}}}>
         {" "}
         This is your personal tracks Dashboard
       </Typography>
