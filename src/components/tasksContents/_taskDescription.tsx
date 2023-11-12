@@ -8,7 +8,7 @@ export const TaskDescription: FC <ItaskDescription> = ({
 }): ReactElement => {
 
   return (
-    <Box>
+    <Box width="100%">
       <Typography> {description} </Typography>
     </Box>
   );

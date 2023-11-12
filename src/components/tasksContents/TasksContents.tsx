@@ -4,13 +4,13 @@ import { TaskHeader } from "./_taskHeader";
 import { TaskDescription } from "./_taskDescription";
 import { TaskFooter } from "./_taskFooter";
 import { Itask } from "./Interface/Itask";
-import { Status } from "../createTasks/enum/status";
+
 import { Priority } from "../createTasks/enum/priority";
 import PropTypes from 'prop-types'
 
 export const TasksContent: FC<Itask> = ({
   priority = Priority.low,
-  status = Status.todo,
+
   date = new Date(),
   description = "lorem ipsonm ami els edi",
   title = "Default track title",

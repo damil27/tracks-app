@@ -23,10 +23,10 @@ export const TaskArea: FC = (): ReactElement => {
       }}
     >
       {" "}
-      <Box px={4}>
+      <Box px={2}>
         <h2>
           Status of you tasks track as on{" "}
-          {currentDate.format("dddd, MMMM D YYYY")} 
+          {currentDate.format("dddd, MMMM D YYYY")}
         </h2>
       </Box>
       <Grid
@@ -50,6 +50,7 @@ export const TaskArea: FC = (): ReactElement => {
             flexDirection: "row",
             justifyContent: "space-around",
             alignItems: "center",
+            width: "100%",
           }}
         >
           <TaskCounter status={Status.todo} />
@@ -74,7 +75,6 @@ export const TaskArea: FC = (): ReactElement => {
             <TasksContent />
             <TasksContent />
           </Box>
-        
         </Grid>
       </Grid>
     </Grid>
