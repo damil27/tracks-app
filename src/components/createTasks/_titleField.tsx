@@ -4,7 +4,7 @@ import { ITextField } from './interfaces/ITextField'
 import PropTypes from "prop-types"
 
 export const TitleField: FC<ITextField> = (props): ReactElement => {
-  const { onChange= (e) =>console.log(e), disabled = false } = props;
+  const { onChange= (e) =>console.log(e), disabled = false, value="" } = props;
   return (
     <TextField
       id="title"
@@ -13,6 +13,7 @@ export const TitleField: FC<ITextField> = (props): ReactElement => {
       label="Create Title"
       disabled={disabled}
       fullWidth
+      value={value}
       placeholder="Title"
     />
   );

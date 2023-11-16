@@ -32,12 +32,13 @@ export const TaskArea: FC = (): ReactElement => {
       <Grid
         p={4}
         container
-        md={8}
-        xs={12}
+       
+      
         sx={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
+          width:"100%"
         }}
       >
         <Grid
