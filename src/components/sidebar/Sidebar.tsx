@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useState, useEffect } from "react";
 import {
   Grid,
   LinearProgress,
@@ -27,24 +27,15 @@ export const Sidebar: FC = (): ReactElement => {
   const [date, setDate] = useState<Date | null>(null);
   const [status, setStatus] = useState<string>(Status.todo);
   const [priority, setPriority] = useState<string>(Priority.normal);
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
+  //create mutation
   const createTaskMutation = useMutation({
     mutationFn: (data: IcreateTask) =>
       SendApiRequest("http://localhost:6200/tasks", "POST", data),
   });
-  // const createTaskMutation = useMutation(
-  //   //@ts-ignore
-  //   (data: IcreateTask) =>
-  //     SendApiRequest("http://localhost:6200/tasks", "POST", data)
-  // );
 
-  // const createTaskMutation = useMutation<void, Error, IcreateTask, unknown>(
-  //   //@ts-ignore
-  //   async (data: IcreateTask) =>
-  //     await SendApiRequest("http://localhost:6200/tasks", "POST", data)
-
-  // );
-
+  //create task handler function
   function createTaskHandler() {
     console.log("phase one");
     if (!title || !description || !date) {
@@ -64,6 +55,20 @@ export const Sidebar: FC = (): ReactElement => {
     createTaskMutation.mutate(newTask);
     console.log(newTask);
   }
+
+  useEffect(() => {
+    if (createTaskMutation.isSuccess) {
+      setShowSuccess(true);
+    }
+
+    const successTimeOut = setTimeout(() => {
+      setShowSuccess(false);
+    }, 6000);
+
+    return () => {
+      clearTimeout(successTimeOut);
+    };
+  }, [createTaskMutation.isSuccess]);
 
   return (
     <Grid
@@ -85,15 +90,20 @@ export const Sidebar: FC = (): ReactElement => {
     >
       {" "}
       <Profile name="Damilare" />
-      <Alert
-        sx={{
-          width: "100%",
-        }}
-        severity="success"
-      >
-        <AlertTitle>Success</AlertTitle>
-        New Task has been successfully created
-      </Alert>
+
+      {showSuccess && (
+        <Alert
+          sx={{
+            width: "100%",
+          }}
+          severity="success"
+        >
+          <AlertTitle>Success</AlertTitle>
+          New Task has been successfully created
+        </Alert>
+      )}
+
+      
       <CreateTask />
       <Stack
         spacing={2}
@@ -101,15 +111,25 @@ export const Sidebar: FC = (): ReactElement => {
           width: "100%",
         }}
       >
-        <TitleField value={title} onChange={(e) => setTitle(e.target.value)} />
+        <TitleField
+          disabled={createTaskMutation.isPending}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <DescriptionField
+          disabled={createTaskMutation.isPending}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <DateField value={date} onChange={(date) => setDate(date)} />
+        <DateField
+          disabled={createTaskMutation.isPending}
+          value={date}
+          onChange={(date) => setDate(date)}
+        />
       </Stack>
       <Stack sx={{ width: "100%" }} spacing={2} direction={"row"}>
         <SelectField
+          disabled={createTaskMutation.isPending}
           label="Status"
           name="status"
           value={status}
@@ -124,6 +144,7 @@ export const Sidebar: FC = (): ReactElement => {
           ]}
         />
         <SelectField
+          disabled={createTaskMutation.isPending}
           label="Priority"
           name="priority"
           value={priority}
@@ -145,9 +166,10 @@ export const Sidebar: FC = (): ReactElement => {
           marginTop: "10px",
         }}
       >
-        <LinearProgress />
+        {createTaskMutation.isPending && <LinearProgress />}
       </Box>
       <Button
+        disabled={!title || !description || !date || !status || !priority}
         onClick={createTaskHandler}
         variant="outlined"
         size="large"

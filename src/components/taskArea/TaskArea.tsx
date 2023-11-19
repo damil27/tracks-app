@@ -4,9 +4,19 @@ import dayjs from "dayjs";
 import { TaskCounter } from "../taskCounter/taskCounter";
 import { Status } from "../createTasks/enum/status";
 import { TasksContent } from "../tasksContents/TasksContents";
+// import { useQuery } from "@tanstack/react-query";
+// import { SendApiRequest } from "../util/sendApiRequest";
 
 export const TaskArea: FC = (): ReactElement => {
   const currentDate = dayjs();
+  // const { error, data, isPending, refetch } = useQuery({
+  //   queryKey: "tracks", queryFn: async () => {
+  //     return await SendApiRequest("http://localhost:6200/tasks", "GET"), 
+  //   }
+  // })
+
+
+  
   return (
     <Grid
       item
