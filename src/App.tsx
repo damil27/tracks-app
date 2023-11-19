@@ -4,8 +4,9 @@ import { ThemeProvider, CssBaseline } from '@mui/material'
 import { customTheme } from './theme/customTheme';
 import { Dashboard } from "./pages/Dashboard"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+const queryClient = new QueryClient()
+
 const App: FC = (): ReactElement => {
-  const queryClient = new QueryClient()
   return (
     <>
       <QueryClientProvider client={queryClient}>

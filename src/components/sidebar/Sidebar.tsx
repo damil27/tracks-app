@@ -22,29 +22,36 @@ import { SendApiRequest } from "../util/sendApiRequest";
 import { IcreateTask } from "./interface/IcreateTask";
 
 export const Sidebar: FC = (): ReactElement => {
-  const [title, setTitle] = useState<string | undefined>("");
+  const [title, setTitle] = useState<string | undefined>(undefined);
   const [description, setDescription] = useState<string | undefined>(undefined);
   const [date, setDate] = useState<Date | null>(null);
   const [status, setStatus] = useState<string>(Status.todo);
   const [priority, setPriority] = useState<string>(Priority.normal);
 
-// const createTaskMutation = useMutation<void, Error, Error, unknown>(
-//   (data: IcreateTask) => {
-//     SendApiRequest("http://localhost:6200/tasks", "POST", data);
-//   }
-// );
+  const createTaskMutation = useMutation({
+    mutationFn: (data: IcreateTask) =>
+      SendApiRequest("http://localhost:6200/tasks", "POST", data),
+  });
+  // const createTaskMutation = useMutation(
+  //   //@ts-ignore
+  //   (data: IcreateTask) =>
+  //     SendApiRequest("http://localhost:6200/tasks", "POST", data)
+  // );
 
-  const createTaskMutation = useMutation<void, Error, IcreateTask, unknown>(
-    //@ts-ignore
-    async (data: IcreateTask) => 
-      await SendApiRequest("http://localhost:6200/tasks", "POST", data)
- 
-  );
+  // const createTaskMutation = useMutation<void, Error, IcreateTask, unknown>(
+  //   //@ts-ignore
+  //   async (data: IcreateTask) =>
+  //     await SendApiRequest("http://localhost:6200/tasks", "POST", data)
+
+  // );
 
   function createTaskHandler() {
+    console.log("phase one");
     if (!title || !description || !date) {
+      console.log("title");
       return;
     }
+    console.log("phase two");
 
     const newTask: IcreateTask = {
       title,
@@ -53,8 +60,9 @@ export const Sidebar: FC = (): ReactElement => {
       status,
       priority,
     };
-
+    console.log("phase three");
     createTaskMutation.mutate(newTask);
+    console.log(newTask);
   }
 
   return (
